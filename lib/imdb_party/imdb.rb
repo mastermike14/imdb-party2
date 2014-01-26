@@ -75,6 +75,11 @@ def build_url(path, params={})
       Movie.new(result["data"]) 
     end
 
+ def fullCredits(imdb_id)
+     result = self.class.get('/title/fullcredits', :query => {:tconst => imdb_id}).parsed_response
+     result
+    end
+
     def top_250
       url = build_url('/chart/top')
 

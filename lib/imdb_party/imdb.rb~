@@ -11,6 +11,26 @@ module ImdbParty
       self.class.base_uri 'anonymouse.org/cgi-bin/anon-www.cgi/https://app.imdb.com' if options[:anonymize]
     end
 
+def build_url(path, params={})
+      default_params = {"api" => "v1", "appid" => "iphone4_1", "apiPolicy" => "app1_1", "apiKey" => "2wex6aeu6a8q9e49k7sfvufd6rhh0n", "locale" => "en_US", "timestamp" => Time.now.to_i}
+
+      query_params = default_params.merge(params)
+      query_param_array = []
+
+      base_uri = URI.parse(self.class.base_uri)
+      base_host = base_uri.host
+      the_path = base_uri.path + path
+
+      query_params.each_pair{|key, value| query_param_array << "#{key}=#{URI.escape(value.to_s)}" }
+      uri = URI::HTTP.build(:scheme => 'https', :host => base_host, :path => the_path, :query => query_param_array.join("&"))
+
+      query_param_array << "sig=app1-#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha1'), default_params["apiKey"], uri.to_s)}"
+
+      uri = URI::HTTP.build(:scheme => 'https', :host => base_host, :path => the_path, :query => query_param_array.join("&"))
+      uri.to_s
+    end
+
+
      def writeFile(imdb_id, resource, method, json)
       open("#{Rails.root}/json/imdb/#{resource}/#{method}/#{imdb_id}.json", "w+")  { |file| file.write(json) }
     end

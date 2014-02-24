@@ -1,8 +1,8 @@
 module ImdbParty
   class Imdb
     include HTTParty
-#     include HTTParty::Icebox
-#     cache :store => 'file', :timeout => 120, :location => Dir.tmpdir
+    #     include HTTParty::Icebox
+    #     cache :store => 'file', :timeout => 120, :location => Dir.tmpdir
 
     base_uri 'app.imdb.com'
     format :json
@@ -11,7 +11,7 @@ module ImdbParty
       self.class.base_uri 'anonymouse.org/cgi-bin/anon-www.cgi/https://app.imdb.com' if options[:anonymize]
     end
 
-def build_url(path, params={})
+    def build_url(path, params={})
       default_params = {"api" => "v1", "appid" => "iphone4_1", "apiPolicy" => "app1_1", "apiKey" => "2wex6aeu6a8q9e49k7sfvufd6rhh0n", "locale" => "en_US", "timestamp" => Time.now.to_i}
 
       query_params = default_params.merge(params)
@@ -31,7 +31,7 @@ def build_url(path, params={})
     end
 
 
-     def writeFile(imdb_id, resource, method, json)
+    def writeFile(imdb_id, resource, method, json)
       open("#{Rails.root}/json/imdb/#{resource}/#{method}/#{imdb_id}.json", "w+")  { |file| file.write(json) }
     end
 
@@ -52,7 +52,7 @@ def build_url(path, params={})
             h = {:title => r["title"], :year => year, :imdb_id => r["id"], :kind => r["key"]}
             movie_results << h
           end
-      end
+        end
 
 
       end
@@ -66,18 +66,18 @@ def build_url(path, params={})
         file = File.read(file_path)
         result= eval(file)
         #Movie.new(ary["data"])
-      else 
-      url = build_url('/title/maindetails', :tconst => imdb_id)
+      else
+        url = build_url('/title/maindetails', :tconst => imdb_id)
 
-      result = self.class.get(url).parsed_response
-      writeFile(imdb_id, "movie","maindetails", result)
-       end
-      Movie.new(result["data"]) 
+        result = self.class.get(url).parsed_response
+        writeFile(imdb_id, "movie","maindetails", result)
+      end
+      Movie.new(result["data"])
     end
 
- def fullCredits(imdb_id)
-     result = self.class.get('/title/fullcredits', :query => {:tconst => imdb_id}).parsed_response
-     result
+    def fullCredits(imdb_id)
+      result = self.class.get('/title/fullcredits', :query => {:tconst => imdb_id}).parsed_response
+      result
     end
 
     def top_250
@@ -94,40 +94,73 @@ def build_url(path, params={})
       results["data"]["list"].map { |r| {:title => r["title"], :imdb_id => r["tconst"], :year => r["year"], :poster_url => (r["image"] ? r["image"]["url"] : nil)} }
     end
 
-   def get_plot(imdb_id)
-     url = build_url('/title/plot', :tconst => imdb_id)
-     result = self.class.get(url).parsed_response
-     writeFile(imdb_id, "movie","fullcredits", result)
-     result
-   end
+    def get_plot(imdb_id)
+      url = build_url('/title/plot', :tconst => imdb_id)
+      result = self.class.get(url).parsed_response
+      writeFile(imdb_id, "movie","fullcredits", result)
+      result
+    end
 
-   def coming_soon
-     url = build_url('/feature/comingsoon')
-     results = self.class.get(url).parsed_response
+    def coming_soon
+      url = build_url('/feature/comingsoon')
+      results = self.class.get(url).parsed_response
       results['data']['list']
     end
 
-   def this_weekend
-     url = build_url('/feature/comingsoon')
-     results = self.class.get(url).parsed_response
-     results = results['data']['list']['list'][0]['list']
-     return results
-   end 
+    def this_weekend
+      url = build_url('/feature/comingsoon')
+      results = self.class.get(url).parsed_response
+      results = results['data']['list']['list'][0]['list']
+      return results
+    end
 
-   def getdvd
-     url = build_url('/products/bestsellers', :query => {:marketplace => 'US', :media => 'dvd'})
-     result = self.class.get(url).parsed_response
-   end
+    def getdvd
+      url = build_url('/products/bestsellers', :query => {:marketplace => 'US', :media => 'dvd'})
+      result = self.class.get(url).parsed_response
+    end
 
-   def getBestPicture
+    def getBestPicture
       self.class.get('/feature/best_picture').parsed_response
-   end
+    end
 
-   def person(person_id)
+    def person(person_id)
       result = self.class.get('/name/maindetails', :query => {:nconst => person_id}).parsed_response
       write_file(person_id, "person", 'maindetails', result)
-   end
+    end
 
+    def person(person_id)
+      result = self.class.get('/name/maindetails', :query => {:nconst => person_id}).parsed_response
+      write_file(person_id, "person", 'maindetails', result)
+    end
+
+    def person2(person_id)
+      result = self.class.get('/name/maindetails', :query => {:nconst => person_id}).parsed_response
+      person = Person.new(result["data"])
+    end
+
+    def popularmoviegenre(genre)
+      result = self.class.get('/moviegenre', :query => {:genre => genre}).parsed_response
+    end
+
+    def boxoffice
+      results = self.class.get('/boxoffice').parsed_response
+    end
+
+    def starmeter
+      self.class.get('/chart/starmeter').parsed_response
+    end
+
+    def moviemeter
+      self.class.get('/chart/moviemeter').parsed_response
+    end
+
+    def news
+      self.class.get('/news').parsed_response
+    end
+
+    def getBornToday
+      self.class.get('feature/borntoday', :query => {:date => Date.today}).parsed_response
+    end
 
 
   end

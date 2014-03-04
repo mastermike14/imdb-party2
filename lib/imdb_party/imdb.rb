@@ -130,12 +130,13 @@ module ImdbParty
 
     def person(person_id)
       result = self.class.get('/name/maindetails', :query => {:nconst => person_id}).parsed_response
-      write_file(person_id, "person", 'maindetails', result)
+      #write_file(person_id, "person", 'maindetails', result)
     end
 
     def person2(person_id)
       result = self.class.get('/name/maindetails', :query => {:nconst => person_id}).parsed_response
       person = Person.new(result["data"])
+      return person 
     end
 
     def popularmoviegenre(genre)

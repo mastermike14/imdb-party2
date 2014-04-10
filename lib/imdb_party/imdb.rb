@@ -66,15 +66,15 @@ module ImdbParty
     end
 
     def fullCredits(imdb_id)
-       file_path = "json/imdb/movie/fullcredits/#{imdb_id}.json"
-      if File.exist?(file_path)
-        file = File.read(file_path)
-        ary= eval(file)
-        return ary 
-      else
+      # file_path = "json/imdb/movie/fullcredits/#{imdb_id}.json"
+      #if File.exist?(file_path)
+      #  file = File.read(file_path)
+     #   ary= eval(file)
+    #  #  return ary 
+     # else
      result = self.class.get('/title/fullcredits', :query => {:tconst => imdb_id}).parsed_response
      result
-   end
+  # end
     end
 
   def coming_soon

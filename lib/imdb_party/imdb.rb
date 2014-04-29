@@ -40,7 +40,7 @@ module ImdbParty
 
      def find_movie_by_id(imdb_id)
       result = self.class.get('/title/maindetails', :query => {:tconst => imdb_id}).parsed_response
-      writeFile(imdb_id, "movie","maindetails", result)
+      #writeFile(imdb_id, "movie","maindetails", result)
       puts result.inspect
       Movie.new(result["data"])
     end

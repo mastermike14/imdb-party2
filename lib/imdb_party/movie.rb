@@ -3,7 +3,7 @@ module ImdbParty
     attr_accessor :imdb_id, :title, :directors, :writers, :tagline, :company, :plot, :runtime, :rating, :poster_url, :release_date, :certification, :genres, :actors, :trailers, :trailer_url, :raw
 
     def initialize(options={})
-      @raw = options 
+      @raw = options unless options['raw'] = false  
       @imdb_id = options["tconst"]
       @title = options["title"]
       @tagline = options["tagline"]

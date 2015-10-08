@@ -73,7 +73,8 @@ module ImdbParty
         result = self.class.get(url).parsed_response
         writeFile(imdb_id, "movie","maindetails", result)
       end
-      result['data'].merge! {"raw" => raw}
+      e = {"raw" => raw}
+      result['data'].merge! e
       Movie.new(result["data"])
     end
 

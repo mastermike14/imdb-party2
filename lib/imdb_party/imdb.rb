@@ -60,7 +60,8 @@ module ImdbParty
       movie_results
     end
 
-    def find_movie_by_id(imdb_id)
+    def find_movie_by_id(imdb_id, raw=true)
+      #expects raw to be true or false
       file_path = "json/imdb/movie/maindetails/#{imdb_id}.json"
       if File.exist?(file_path)
         file = File.read(file_path)
@@ -72,6 +73,7 @@ module ImdbParty
         result = self.class.get(url).parsed_response
         writeFile(imdb_id, "movie","maindetails", result)
       end
+      result['data'].merge! {"raw" => raw}
       Movie.new(result["data"])
     end
 

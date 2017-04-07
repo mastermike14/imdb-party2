@@ -12,7 +12,7 @@ module ImdbParty
     end
 
     def build_url(path, params={})
-      default_params = {"api" => "v1", "appid" => "iphone4_1", "apiPolicy" => "app1_1", "apiKey" => "2wex6aeu6a8q9e49k7sfvufd6rhh0n", "locale" => "en_US", "timestamp" => Time.now.to_i}
+      default_params = {"api" => "v1", "appid" => "iphone7_1", "apiPolicy" => "app1_1", "apiKey" => "d2bb34ec6f6d4ef3703c9b0c36c4791ef8b9ca9b", "locale" => "en_US", "timestamp" => Time.now.to_i}
 
       query_params = default_params.merge(params)
       query_param_array = []

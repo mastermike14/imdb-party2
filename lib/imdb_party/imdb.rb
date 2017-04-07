@@ -7,7 +7,7 @@ module ImdbParty
   #TODO: Fix localization
     base_uri 'app.imdb.com'
     #default_params = {"api" => "v1", "appid" => "iphone3", "locale" => "en_US", "timestamp" => Time.now.to_i, "sig" => "app1_1"}
-    default_params = {"api" => "v1", "appid" => "iphone1_1", "apiPolicy" => "app1_1", "locale" => "de_DE", "apiKey" => "izhvlfj5zvLM/gWsjLE0/g", "timestamp" => Time.now.to_i}
+    default_params = {"api" => "v1", "appid" => "iphone1_1", "apiPolicy" => "app1_1", "locale" => "de_DE", "apiKey" => "TjRZqcCfpHL5Fg6OUiuvWw", "timestamp" => Time.now.to_i}
     def createParameter
       parameter = Hash.new
       parameter['api'] = 'v1'

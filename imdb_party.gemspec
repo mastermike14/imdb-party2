@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.version = "0.8.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jon Maddox"]
-  s.date = "2013-07-17"
+  s.authors = ["Jon Maddox", "Mike M"]
+  s.date = "2017-04-06"
   s.description = "IMDB client using the IMDB API that their iPhone app uses"
-  s.email = "jon@mustacheinc.com"
+  s.email = "mastermike14@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.md"
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
     "test/test_helper.rb",
     "test/trailer_test.rb"
   ]
-  s.homepage = "http://github.com/maddox/imdb_party"
+  s.homepage = "http://github.com/mastermike14/imdb-party2"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.23"
   s.summary = "IMDB client using the IMDB API that their iPhone app uses"
